@@ -1,5 +1,6 @@
 #app {
   width: 100vw;
+  
 }
 
 .main-heading {
@@ -11,9 +12,17 @@
   border: 1px solid black;
   margin: 1rem;
   padding: 0.5rem;
+  border-radius: 0.2rem;
 
   .close-btn {
     padding: 0.5rem 1rem;
     border: 1px solid rgb(25, 24, 24);
   }
+}
+
+.top-btn-wrapper {
+  display: flex;
+  justify-content: end;
+  padding: 0.5rem;
+  
 }
