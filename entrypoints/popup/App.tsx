@@ -11,9 +11,16 @@ function App() {
   }, []);
 
   const handleClose = (tabId: number) => {
-    chrome.tabs.remove(tabId, () => {
+    return chrome.tabs.remove(tabId, () => {
       setTabs((prevTabs) => prevTabs.filter((tab) => tab.id !== tabId));
     });
+  };
+  const handleGoTab = (tabId: number) => {
+    return chrome.tabs.update(tabId, { active: true });
+  };
+
+  const handleBack = () => {
+     chrome.tabs.goBack();
   };
 
   return (
@@ -23,18 +30,35 @@ function App() {
         <button className="add-btn" onClick={() => chrome.tabs.create({})}>
           New Tab
         </button>
+        <button className="add-btn" onClick={handleBack}>
+          Back
+        </button>
       </div>
 
       {allTabs.map((tabItems) => {
         return (
-          <div className="tab-items-wrapper">
+          <div
+            className={` tab-items-wrapper ${
+              tabItems.active ? "active-tab" : " non-active-tab "
+            } `}
+          >
             <p>{tabItems.title}</p>
-            <button
-              className="close-btn"
-              onClick={() => handleClose(tabItems.id!)}
-            >
-              Close
-            </button>
+
+            <div className="action-btn-container">
+              <button
+                className="close-btn"
+                onClick={() => handleClose(tabItems.id!)}
+              >
+                Close
+              </button>
+
+              <button
+                className="go-btn"
+                onClick={() => handleGoTab(tabItems.id!)}
+              >
+                Open
+              </button>
+            </div>
           </div>
         );
       })}
